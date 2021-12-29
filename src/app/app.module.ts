@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Demo1Component } from './demo1/demo1.component';
+import { Demo1Component } from './demo1/question/demo1.component';
 
 @NgModule({
   declarations: [AppComponent, Demo1Component],

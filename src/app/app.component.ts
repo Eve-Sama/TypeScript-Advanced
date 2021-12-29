@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   cards = [
     {
-      title: '复用代码',
+      title: 'Demo1',
       url: '/demo1',
     },
     {
-      title: '复用代码2',
+      title: 'Demo2',
       url: '/demo2',
     },
   ];
