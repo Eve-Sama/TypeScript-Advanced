@@ -1,1 +1,37 @@
-demo1
+<div class="container">
+  <div class="setting">
+    <p class="tip">请设置字段</p>
+    <button type="button" (click)="setField('text')">设置文本字段</button>
+    <button type="button" (click)="setField('date')">设置日期字段</button>
+    <button type="button" (click)="setField('image')">设置图片字段</button>
+
+    <p class="tip">已添加以下字段</p>
+    <ng-container *ngIf="fieldType"></ng-container>
+    <ng-container [ngSwitch]="fieldType">
+      <ng-container *ngSwitchCase="'text'">这是一个文本字段</ng-container>
+      <ng-container *ngSwitchCase="'date'">这是一个日期字段</ng-container>
+      <ng-container *ngSwitchCase="'image'">这是一个图片字段</ng-container>
+      <ng-container *ngSwitchDefault>尚未添加</ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="fieldType === 'date'">
+      <p class="tip">请设置日期字段的格式</p>
+      <button type="button" (click)="setFormat('yyyy')">年</button>
+      <button type="button" (click)="setFormat('yyyy-mm')">年月</button>
+      <button type="button" (click)="setFormat('yyyy-mm-dd')">年月日</button>
+    </ng-container>
+
+    <ng-container *ngIf="fieldType === 'date'">
+      <p class="tip">已设置以下日期格式</p>
+      <ng-container [ngSwitch]="format">
+        <ng-container *ngSwitchCase="'yyyy'">年</ng-container>
+        <ng-container *ngSwitchCase="'yyyy-mm'">年月</ng-container>
+        <ng-container *ngSwitchCase="'yyyy-mm-dd'">年月日</ng-container>
+        <ng-container *ngSwitchDefault>尚未添加</ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="res">
+    <pre>{{ field | json }}</pre>
+  </div>
+</div>

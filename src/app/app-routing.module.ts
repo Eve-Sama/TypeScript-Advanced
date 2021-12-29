@@ -5,11 +5,6 @@ import { Demo2Component } from './demo2/demo2.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'demo1',
-    pathMatch: 'full',
-  },
-  {
     path: 'demo1',
     component: Demo1Component,
   },
@@ -19,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'demo1',
+    redirectTo: '',
   },
 ];
 
