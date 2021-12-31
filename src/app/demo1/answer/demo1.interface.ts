@@ -17,4 +17,4 @@ export interface ImageField extends BasicField {
 export type FieldType = 'text' | 'date' | 'image';
 export type FieldFormat = 'yyyy' | 'yyyy-mm' | 'yyyy-mm-dd';
 
-export interface Field extends TextField, DateField, ImageField {}
+export type Field = TextField | DateField | ImageField;

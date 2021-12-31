@@ -17,7 +17,7 @@ export class Demo1Component {
   fieldType: string;
   format: FieldFormat = 'yyyy';
   /** 字段的详细信息 */
-  field: Partial<Field>;
+  field: Field;
 
   setField(type: FieldType): void {
     this.fieldType = type;
@@ -52,6 +52,6 @@ export class Demo1Component {
 
   setFormat(type: FieldFormat): void {
     this.format = type;
-    this.field.format = type;
+    (this.field as DateField).format = type;
   }
 }
