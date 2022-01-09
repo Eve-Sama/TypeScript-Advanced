@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="operation">
+    <button type="button" (click)="add()">录入人员</button>
+    <div class="info-contianer">
+      <ng-container *ngIf="show">
+        <div class="info-item">
+          <div class="title">身份证:</div>
+          <div class="value">
+            <input type="text" [(ngModel)]="person.id" disabled />
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="title">血型:</div>
+          <div class="value">
+            <input type="text" [(ngModel)]="person.bloodType" [disabled]="mode === 'edit'" />
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="title">姓名:</div>
+          <div class="value">
+            <input type="text" [(ngModel)]="person.name" />
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="title">地址:</div>
+          <div class="value">
+            <input type="text" [(ngModel)]="person.address" />
+          </div>
+        </div>
+        <div class="info-item">
+          <button *ngIf="mode === 'add'" type="button" (click)="addSubmit()">提交</button>
+          <button *ngIf="mode === 'edit'" type="button" (click)="editSubmit()">提交</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="display">
+    <ul>
+      <li *ngFor="let person of personList">
+        <pre>{{ person | json }}</pre>
+        <button type="button" (click)="edit(person)">编辑</button>
+        <button type="button" (click)="delete(person)">删除</button>
+      </li>
+    </ul>
+  </div>
+</div>
