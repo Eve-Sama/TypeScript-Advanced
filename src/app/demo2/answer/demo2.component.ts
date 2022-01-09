@@ -9,14 +9,14 @@ import { Demo2Service } from './demo2.request';
   providers: [Demo2Service],
 })
 export class Demo2Component implements OnInit {
-  show: boolean = false;
+  show: boolean;
   person: Person;
-  personList = [];
+  personList: Person[] = [];
   mode: 'add' | 'edit';
 
   add(): void {
     this.person = {
-      id: `${this.getUid()}`,
+      id: `${this._getUid()}`,
       bloodType: '',
       name: '',
       address: '',
@@ -36,30 +36,30 @@ export class Demo2Component implements OnInit {
   addSubmit(): void {
     this.demo2Service
       .createPerson(this.person)
-      .subscribe(() => this._initPersonList());
+      .subscribe(() => this.initPersonList());
     this.show = false;
   }
 
   editSubmit(): void {
     this.demo2Service
       .updatePerson(this.person)
-      .subscribe(() => this._initPersonList());
+      .subscribe(() => this.initPersonList());
     this.show = false;
   }
 
   delete(person: Person): void {
     this.demo2Service
       .deletePerson(person)
-      .subscribe(() => this._initPersonList());
+      .subscribe(() => this.initPersonList());
     this.show = false;
   }
 
   /** 模拟随机生成id */
-  getUid(): number {
+  private _getUid(): number {
     return Math.floor(Math.random() * (100000 - 0)) + 0;
   }
 
-  private _initPersonList(): void {
+  private initPersonList(): void {
     this.demo2Service
       .getPersonList()
       .subscribe((v) => (this.personList = v.personList));
@@ -68,6 +68,6 @@ export class Demo2Component implements OnInit {
   constructor(private demo2Service: Demo2Service) {}
 
   ngOnInit(): void {
-    this._initPersonList();
+    this.initPersonList();
   }
 }
