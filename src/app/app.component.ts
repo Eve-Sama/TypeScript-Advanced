@@ -15,5 +15,9 @@ export class AppComponent {
       title: '公民信息登记',
       url: '/demo2',
     },
+    {
+      title: 'as const',
+      url: '/demo3',
+    },
   ];
 }
