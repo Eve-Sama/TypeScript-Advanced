@@ -1,0 +1,12 @@
+<section class="chart-type">
+  <ng-container *ngFor="let chartType of charts">
+    <img [src]="'https://file.qingflow.com/assets/bi/chart-type/chart-' + chartType + '.png'" (click)="select(chartType)">
+  </ng-container>
+  <span>当前图表类型: <span class="chart-name">{{ chartName || '尚未选择' }}</span></span>
+</section>
+
+<section class="g2-container">
+  <ng-container *ngIf="show">
+    <div class="g2-plot" id="container"></div>
+  </ng-container>
+</section>

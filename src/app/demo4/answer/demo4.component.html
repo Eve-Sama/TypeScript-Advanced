@@ -1,0 +1,5 @@
+<ng-container *ngFor="let chartType of charts">
+  <img [src]="'https://file.qingflow.com/assets/bi/chart-type/chart-' + chartType + '.png'" (click)="select(chartType)">
+</ng-container>
+
+<p>当前111选中的图表: {{ chartName }}</p>

@@ -19,5 +19,9 @@ export class AppComponent {
       title: 'as const',
       url: '/demo3',
     },
+    {
+      title: '复杂场景',
+      url: '/demo4',
+    },
   ];
 }
