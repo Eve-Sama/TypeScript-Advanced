@@ -1,22 +1,27 @@
-import { ChartType } from './demo4.interface';
+import { ChartType, FindConfigByType } from './demo4.interface';
 
-export function getG2Config(chartType: ChartType): Record<string, any> {
-  const config = { data: null };
+export function getG2Config<T extends ChartType>(
+  chartType: ChartType
+): FindConfigByType<T> {
+  const config: FindConfigByType<typeof chartType> = { data: null };
   _dealConfigByChartType(config, chartType);
   _dealConfigData(config, chartType);
-  return config;
+  return config as FindConfigByType<T>;
 }
 
-function _dealConfigByChartType(config: Record<string, any>, chartType: ChartType): void {
+function _dealConfigByChartType(
+  config: FindConfigByType<typeof chartType>,
+  chartType: ChartType
+): void {
   if (chartType === 'line') {
-    const tempConfig = {
+    const tempConfig: FindConfigByType<typeof chartType> = {
       data: null,
       xField: 'year',
       yField: 'value',
     };
     Object.assign(config, tempConfig);
   } else if (chartType === 'pie') {
-    const tempConfig = {
+    const tempConfig: FindConfigByType<typeof chartType> = {
       data: null,
       appendPadding: 10,
       angleField: 'value',
@@ -35,7 +40,7 @@ function _dealConfigByChartType(config: Record<string, any>, chartType: ChartTyp
     };
     Object.assign(config, tempConfig);
   } else if (chartType === 'radar') {
-    const tempConfig = {
+    const tempConfig: FindConfigByType<typeof chartType> = {
       data: null,
       xField: 'name',
       yField: 'star',
@@ -45,7 +50,7 @@ function _dealConfigByChartType(config: Record<string, any>, chartType: ChartTyp
           alias: 'star 数量',
           min: 0,
           nice: true,
-          formatter: v => Number(v).toFixed(2),
+          formatter: (v) => Number(v).toFixed(2),
         },
       },
       xAxis: {
@@ -64,10 +69,24 @@ function _dealConfigByChartType(config: Record<string, any>, chartType: ChartTyp
       area: {},
     };
     Object.assign(config, tempConfig);
+  } else if (chartType === 'bar') {
+    const tempConfig: FindConfigByType<typeof chartType> = {
+      data: null,
+      xField: 'value',
+      yField: 'year',
+      seriesField: 'year',
+      legend: {
+        position: 'top-left',
+      },
+    };
+    Object.assign(config, tempConfig);
   }
 }
 
-function _dealConfigData(config: Record<string, any>, chartType: ChartType): void {
+function _dealConfigData(
+  config: Record<string, any>,
+  chartType: ChartType
+): void {
   if (chartType === 'line') {
     const data = [
       { year: '1991', value: 3 },
@@ -101,7 +120,16 @@ function _dealConfigData(config: Record<string, any>, chartType: ChartType): voi
       { name: 'AVA', star: 885 },
       { name: 'G2Plot', star: 1626 },
     ];
-    const finalData = data.map(d => ({ ...d, star: Math.sqrt(d.star) }));
+    const finalData = data.map((d) => ({ ...d, star: Math.sqrt(d.star) }));
     config.data = finalData;
+  } else if (chartType === 'bar') {
+    const data = [
+      { year: '1951 年', value: 38 },
+      { year: '1952 年', value: 52 },
+      { year: '1956 年', value: 61 },
+      { year: '1957 年', value: 145 },
+      { year: '1958 年', value: 48 },
+    ];
+    config.data = data;
   }
 }
