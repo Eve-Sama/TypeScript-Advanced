@@ -21,19 +21,19 @@ export class Demo4Component {
     let plot: Line | Pie | Radar | Bar;
     if (chartType === 'line') {
       this.chartName = '折线图';
-      const config = getG2Config<'line'>(chartType);
+      const config = getG2Config<typeof chartType>(chartType);
       plot = new Line('container', config);
     } else if (chartType === 'pie') {
       this.chartName = '饼图';
-      const config = getG2Config<'pie'>(chartType);
+      const config = getG2Config<typeof chartType>(chartType);
       plot = new Pie('container', config);
     } else if (chartType === 'radar') {
       this.chartName = '雷达图';
-      const config = getG2Config<'radar'>(chartType);
+      const config = getG2Config<typeof chartType>(chartType);
       plot = new Radar('container', config);
     } else if(chartType === 'bar') {
       this.chartName = '条形图';
-      const config = getG2Config<'bar'>(chartType);
+      const config = getG2Config<typeof chartType>(chartType);
       plot = new Bar('container', config);
     }
     plot.render();
