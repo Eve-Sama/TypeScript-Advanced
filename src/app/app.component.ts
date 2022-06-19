@@ -23,5 +23,9 @@ export class AppComponent {
       title: '复杂场景',
       url: '/demo4',
     },
+    {
+      title: 'is',
+      url: '/demo5',
+    },
   ];
 }

@@ -4,6 +4,7 @@ import { Demo1Component } from './demo1/question/demo1.component';
 import { Demo2Component } from './demo2/question/demo2.component';
 import { Demo3Component } from './demo3/question/demo3.component';
 import { Demo4Component } from './demo4/question/demo4.component';
+import { Demo5Component } from './demo5/answer/demo5.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'demo4',
     component: Demo4Component,
+  },
+  {
+    path: 'demo5',
+    component: Demo5Component,
   },
   {
     path: '**',
