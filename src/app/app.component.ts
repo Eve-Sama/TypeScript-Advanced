@@ -27,5 +27,9 @@ export class AppComponent {
       title: 'is',
       url: '/demo5',
     },
+    {
+      title: 'form',
+      url: '/demo6',
+    },
   ];
 }
