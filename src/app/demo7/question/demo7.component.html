@@ -1,0 +1,9 @@
+<button type="button" (click)="addUser()">增加普通用户</button>
+<button type="button" (click)="addUser(true)" [disabled]="existAdmin()">增加管理员</button>
+
+<div class="user-container-outer">
+  <div *ngFor="let user of userList; let index = index;" class="user-container" [class.admin]="user.beingAdmin">
+    <span class="user-name">{{ user.name }}</span>
+    <div class="close" (click)="deleteUser(index)">X</div>
+  </div>
+</div>

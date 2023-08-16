@@ -31,5 +31,9 @@ export class AppComponent {
       title: 'form',
       url: '/demo6',
     },
+    {
+      title: '人员册',
+      url: '/demo7',
+    },
   ];
 }
