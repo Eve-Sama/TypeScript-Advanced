@@ -19,7 +19,7 @@ export class Demo7Component implements OnInit {
   /** 物色小晶块 */
   blockInfo = {
     /** 背包中拥有的数量 */
-    current: 0,
+    current: 15,
     /** 在增加之前的数量 */
     before: 0,
     /** 强化装备所需数量 */
@@ -31,7 +31,7 @@ export class Demo7Component implements OnInit {
   /** 金币 */
   moneyInfo = {
     /** 背包中拥有的数量 */
-    current: 0,
+    current: 400000,
     /** 在增加之前的数量 */
     before: 0,
     /** 强化装备所需数量 */
@@ -40,9 +40,24 @@ export class Demo7Component implements OnInit {
     timer: null,
     startAddAnimation: false,
   };
+  payInfo = {
+    /** 拥有获取材料的次数 */
+    count: 0,
+    /** 已消费的流币 */
+    consumeLiuBi: 0,
+  };
 
   getBlock(): void {
-    this.blockInfo.addNum = Math.floor(Math.random() * 50) + 1;
+    if (this.payInfo.count === 0) {
+      const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
+      if (value) {
+        this.payInfo.count += 10;
+        this.payInfo.consumeLiuBi++;
+      }
+      return
+    }
+    this.payInfo.count--;
+    this.blockInfo.addNum = this._getRandom(70, 160);
     this.blockInfo.before = this.blockInfo.current;
     this.blockInfo.current += this.blockInfo.addNum;
     this.blockInfo.startAddAnimation = true;
@@ -53,7 +68,16 @@ export class Demo7Component implements OnInit {
   }
 
   getMoney(): void {
-    this.moneyInfo.addNum = Math.floor(Math.random() * 100000) + 10000;
+    if (this.payInfo.count === 0) {
+      const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
+      if (value) {
+        this.payInfo.count += 10;
+        this.payInfo.consumeLiuBi++;
+      }
+      return
+    }
+    this.payInfo.count--;
+    this.moneyInfo.addNum = this._getRandom(1000000, 5000000);
     this.moneyInfo.before = this.moneyInfo.current;
     this.moneyInfo.current += this.moneyInfo.addNum;
     this.moneyInfo.startAddAnimation = true;
@@ -63,18 +87,32 @@ export class Demo7Component implements OnInit {
     }, 2000);
   }
 
+  /** 检查用户是否有获取材料的次数 */
+  private _canGet(): boolean {
+    return !(this.payInfo.count === 0);
+  }
+
   up(): void {
-    const upData = map.get(this.level);
-    if (this._getRate(upData.rate)) {
+    if (this.blockInfo.need > this.blockInfo.current) {
+      alert('无色小晶块数量不足!');
+      return;
+    }
+    if (this.moneyInfo.need > this.moneyInfo.current) {
+      alert('金币数量不足!');
+      return;
+    }
+    this.upInfo.times++;
+    this.blockInfo.current -= this.blockInfo.need;
+    this.moneyInfo.current -= this.moneyInfo.need;
+    if (this._getRate(this.upInfo.rate)) {
       this.upInfo.state = '强化成功';
       this.level++;
-      if(this.level < 15) {
+      if (this.level < 15) {
         this._upSuccess();
       }
     } else {
       this.upInfo.state = '强化失败';
     }
-    this.upInfo.times++;
   }
 
   private _upSuccess(): void {
@@ -87,6 +125,10 @@ export class Demo7Component implements OnInit {
   /** 根据概率, 计算当前成功的可能值 */
   private _getRate(rate: number): boolean {
     return Math.random() <= rate;
+  }
+
+  private _getRandom(min: number, max: number): number {
+    return Math.floor(Math.random() * max) + min;
   }
 
   ngOnInit(): void {

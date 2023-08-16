@@ -1,26 +1,16 @@
-// .user-container-outer {
-//   position: relative;
-//   left: -10px;
-//   display: flex;
-//   flex-wrap: wrap;
-//   margin-top: 50px;
-//   .user-container {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     margin-left: 10px;
-//     border: 1px dashed #000;
-//     margin-top: 10px;
-//     .close {
-//       margin-left: 8px;
-//       cursor: pointer;
-//       color: gray;
-//     }
-//     &.admin {
-//       border: 1px solid red;
-//     }
-//   }
-// }
+.container {
+  display: flex;
+  justify-content: space-between;
+
+  .wepon-img-container {
+    display: flex;
+    align-items: center;
+    &>img{
+      width: 80%;
+      height: 80%;
+    }
+  }
+}
 
 .op-list {
   display: flex;
@@ -45,7 +35,7 @@
     align-items: center;
     list-style-type: none;
     margin-bottom: 10px;
-    transition: all ease 0.2s;
+    transition: all ease 0.3s;
 
     img {
       width: 40px;
