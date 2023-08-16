@@ -7,16 +7,14 @@ import { map } from './demo7.interface';
   styleUrls: ['./demo7.component.scss'],
 })
 export class Demo7Component implements OnInit {
-  /** 当前已消耗的流币 */
-  usedLiuBi = 0;
   /** 当前强化等级 */
   level = 0;
   upInfo = {
     state: '等待强化',
     times: 0,
-    rate: 0.9,
+    rate: 0,
   };
-  /** 物色小晶块 */
+  /** 无色小晶块 */
   blockInfo = {
     /** 背包中拥有的数量 */
     current: 15,
@@ -31,7 +29,7 @@ export class Demo7Component implements OnInit {
   /** 金币 */
   moneyInfo = {
     /** 背包中拥有的数量 */
-    current: 400000,
+    current: 0,
     /** 在增加之前的数量 */
     before: 0,
     /** 强化装备所需数量 */
@@ -87,11 +85,6 @@ export class Demo7Component implements OnInit {
     }, 2000);
   }
 
-  /** 检查用户是否有获取材料的次数 */
-  private _canGet(): boolean {
-    return !(this.payInfo.count === 0);
-  }
-
   up(): void {
     if (this.blockInfo.need > this.blockInfo.current) {
       alert('无色小晶块数量不足!');
@@ -104,7 +97,7 @@ export class Demo7Component implements OnInit {
     this.upInfo.times++;
     this.blockInfo.current -= this.blockInfo.need;
     this.moneyInfo.current -= this.moneyInfo.need;
-    if (this._getRate(this.upInfo.rate)) {
+    if (this._getResultByRate(this.upInfo.rate)) {
       this.upInfo.state = '强化成功';
       this.level++;
       if (this.level < 15) {
@@ -123,7 +116,7 @@ export class Demo7Component implements OnInit {
   }
 
   /** 根据概率, 计算当前成功的可能值 */
-  private _getRate(rate: number): boolean {
+  private _getResultByRate(rate: number): boolean {
     return Math.random() <= rate;
   }
 
