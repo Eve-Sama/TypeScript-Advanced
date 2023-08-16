@@ -32,7 +32,7 @@ export class AppComponent {
       url: '/demo6',
     },
     {
-      title: '人员册',
+      title: '强化装备',
       url: '/demo7',
     },
   ];

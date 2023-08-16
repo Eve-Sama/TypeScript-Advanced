@@ -1,23 +1,70 @@
-.user-container-outer {
-  position: relative;
-  left: -10px;
+// .user-container-outer {
+//   position: relative;
+//   left: -10px;
+//   display: flex;
+//   flex-wrap: wrap;
+//   margin-top: 50px;
+//   .user-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     margin-left: 10px;
+//     border: 1px dashed #000;
+//     margin-top: 10px;
+//     .close {
+//       margin-left: 8px;
+//       cursor: pointer;
+//       color: gray;
+//     }
+//     &.admin {
+//       border: 1px solid red;
+//     }
+//   }
+// }
+
+.op-list {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 50px;
-  .user-container {
+  button {
+    margin-right: 8px;
+  }
+}
+
+.equip-info {
+  margin-left: 40px;
+  color: #d002d2;
+  font-size: 16px;
+  .level {
+    margin-right: 10px;
+  }
+}
+
+.material-list {
+  li {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-left: 10px;
-    border: 1px dashed #000;
-    margin-top: 10px;
-    .close {
-      margin-left: 8px;
-      cursor: pointer;
-      color: gray;
-    }
-    &.admin {
-      border: 1px solid red;
+    list-style-type: none;
+    margin-bottom: 10px;
+    transition: all ease 0.2s;
+
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
     }
   }
+}
+
+.up-result {
+  font-weight: bold;
+}
+
+.up-success {
+  color: green;
+}
+.up-failed {
+  color: red;
+}
+.up-wait {
+  color: gray;
 }

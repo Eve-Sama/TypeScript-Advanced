@@ -1,9 +1,60 @@
-<button type="button" (click)="addUser()">增加普通用户</button>
-<button type="button" (click)="addUser(true)" [disabled]="existAdmin()">增加管理员</button>
-
-<div class="user-container-outer">
-  <div *ngFor="let user of userList; let index = index;" class="user-container" [class.admin]="user.beingAdmin">
-    <span class="user-name">{{ user.name }}</span>
-    <div class="close" (click)="deleteUser(index)">X</div>
-  </div>
+<div class="op-list">
+  <button type="button" (click)="getBlock()">获取无色小晶块</button>
+  <button type="button" (click)="getMoney()">获取金币</button>
 </div>
+
+<h3>背包</h3>
+<ul class="material-list">
+  <li *ngIf="blockInfo.startAddAnimation">
+    <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />{{
+      blockInfo.before | currency : ' ' : 'symbol' : '1.0'
+    }}
+    + {{ blockInfo.addNum | currency : ' ' : 'symbol' : '1.0' }} 个
+  </li>
+  <li *ngIf="!blockInfo.startAddAnimation">
+    <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />{{
+      blockInfo.current | currency : ' ' : 'symbol' : '1.0'
+    }}
+    个
+  </li>
+  <li *ngIf="moneyInfo.startAddAnimation">
+    <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />{{
+      moneyInfo.before | currency : ' ' : 'symbol' : '1.0'
+    }}
+    +
+    {{ moneyInfo.addNum | currency : ' ' : 'symbol' : '1.0' }}
+  </li>
+  <li *ngIf="!moneyInfo.startAddAnimation">
+    <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />{{
+      moneyInfo.before | currency : ' ' : 'symbol' : '1.0'
+    }}
+  </li>
+</ul>
+
+<h3>所需材料信息</h3>
+<ul class="material-list">
+  <li>
+    <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />
+    {{ blockInfo.need | currency : ' ' : 'symbol' : '1.0' }} 个
+  </li>
+  <li>
+    <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />
+    {{ moneyInfo.need | currency : ' ' : 'symbol' : '1.0' }}
+  </li>
+</ul>
+
+<h3>强化信息</h3>
+<h5 class="equip-info">
+  <span *ngIf="level > 0" class="level">+ {{ level }}</span>
+  <span>魔剑 - 阿菲波斯</span>
+</h5>
+<ul class="material-list">
+  <li>成功率: {{ upInfo.rate * 100 | number : '2.0-1' }}%</li>
+  <li [ngClass]="{ 'up-success': upInfo.state === '强化成功', 'up-failed': upInfo.state === '强化失败', 'up-wait': upInfo.state === '等待强化' }">
+    强化结果: <span class="up-result">{{ upInfo.state }}</span>
+  </li>
+  <li>强化次数: {{ upInfo.times }}</li>
+  <li>
+    <button type="button" [disabled]="level >= 15" (click)="up()">强化装备</button>
+  </li>
+</ul>
