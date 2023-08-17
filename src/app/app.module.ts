@@ -10,7 +10,7 @@ import { Demo1Component } from './demo1/question/demo1.component';
 import { Demo2Component } from './demo2/question/demo2.component';
 import { Demo3Component } from './demo3/question/demo3.component';
 import { Demo4Component } from './demo4/question/demo4.component';
-import { Demo7Component } from './demo7/question/demo7.component';
+import { Demo7Component } from './demo7/answer/demo7.component';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({

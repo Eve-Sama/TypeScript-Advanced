@@ -1,9 +1,3 @@
-export interface User {
-  id: string;
-  name: string;
-  beingAdmin: boolean;
-}
-
 export const map = new Map<
   number,
   {
