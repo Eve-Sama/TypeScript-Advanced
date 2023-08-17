@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from './demo7.interface';
-import { BackendService } from './demo7.backend';
 
 @Component({
   selector: 'app-demo7',
   templateUrl: './demo7.component.html',
   styleUrls: ['./demo7.component.scss'],
-  providers: [BackendService],
 })
 export class Demo7Component implements OnInit {
   /** 当前强化等级 */
@@ -54,7 +52,7 @@ export class Demo7Component implements OnInit {
         this.payInfo.count += 10;
         this.payInfo.consumeLiuBi++;
       }
-      return;
+      return
     }
     this.payInfo.count--;
     this.blockInfo.addNum = this._getRandom(70, 160);
@@ -74,7 +72,7 @@ export class Demo7Component implements OnInit {
         this.payInfo.count += 10;
         this.payInfo.consumeLiuBi++;
       }
-      return;
+      return
     }
     this.payInfo.count--;
     this.moneyInfo.addNum = this._getRandom(1000000, 5000000);
@@ -96,23 +94,18 @@ export class Demo7Component implements OnInit {
       alert('金币数量不足!');
       return;
     }
-    this.backendService.levelUp(this.level).subscribe(
-      v => {
-        if (v) {
-          this.upInfo.state = '强化成功';
-          this.level++;
-          this._upSuccess();
-        } else {
-          this.upInfo.state = '强化失败';
-        }
-        this.upInfo.times++;
-        this.blockInfo.current -= this.blockInfo.need;
-        this.moneyInfo.current -= this.moneyInfo.need;
-      },
-      error => {
-        alert(error);
+    this.upInfo.times++;
+    this.blockInfo.current -= this.blockInfo.need;
+    this.moneyInfo.current -= this.moneyInfo.need;
+    if (this._getResultByRate(this.upInfo.rate)) {
+      this.upInfo.state = '强化成功';
+      this.level++;
+      if (this.level < 15) {
+        this._upSuccess();
       }
-    );
+    } else {
+      this.upInfo.state = '强化失败';
+    }
   }
 
   private _upSuccess(): void {
@@ -122,11 +115,14 @@ export class Demo7Component implements OnInit {
     this.moneyInfo.need = upData.money;
   }
 
+  /** 根据概率, 计算当前成功的可能值 */
+  private _getResultByRate(rate: number): boolean {
+    return Math.random() <= rate;
+  }
+
   private _getRandom(min: number, max: number): number {
     return Math.floor(Math.random() * max) + min;
   }
-
-  constructor(private backendService: BackendService) {}
 
   ngOnInit(): void {
     this._upSuccess();
