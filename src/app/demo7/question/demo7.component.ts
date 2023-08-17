@@ -9,6 +9,7 @@ import { BackendService } from './demo7.backend';
   providers: [BackendService],
 })
 export class Demo7Component implements OnInit {
+  isSpinning = false;
   /** 当前强化等级 */
   level = 0;
   upInfo = {
@@ -49,11 +50,7 @@ export class Demo7Component implements OnInit {
 
   getBlock(): void {
     if (this.payInfo.count === 0) {
-      const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
-      if (value) {
-        this.payInfo.count += 10;
-        this.payInfo.consumeLiuBi++;
-      }
+      alert('剩余次数不足, 请充值!');
       return;
     }
     this.payInfo.count--;
@@ -69,11 +66,7 @@ export class Demo7Component implements OnInit {
 
   getMoney(): void {
     if (this.payInfo.count === 0) {
-      const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
-      if (value) {
-        this.payInfo.count += 10;
-        this.payInfo.consumeLiuBi++;
-      }
+      alert('剩余次数不足, 请充值!');
       return;
     }
     this.payInfo.count--;
@@ -87,6 +80,14 @@ export class Demo7Component implements OnInit {
     }, 2000);
   }
 
+  pay(): void {
+    const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
+    if (value) {
+      this.payInfo.count += 10;
+      this.payInfo.consumeLiuBi++;
+    }
+  }
+
   up(): void {
     if (this.blockInfo.need > this.blockInfo.current) {
       alert('无色小晶块数量不足!');
@@ -96,6 +97,7 @@ export class Demo7Component implements OnInit {
       alert('金币数量不足!');
       return;
     }
+    this.isSpinning = true;
     this.backendService.levelUp(this.level).subscribe(
       v => {
         if (v) {
@@ -108,8 +110,10 @@ export class Demo7Component implements OnInit {
         this.upInfo.times++;
         this.blockInfo.current -= this.blockInfo.need;
         this.moneyInfo.current -= this.moneyInfo.need;
+        this.isSpinning = false;
       },
       error => {
+        this.isSpinning = false;
         alert(error);
       }
     );
@@ -117,9 +121,11 @@ export class Demo7Component implements OnInit {
 
   private _upSuccess(): void {
     const upData = map.get(this.level);
-    this.upInfo.rate = upData.rate;
-    this.blockInfo.need = upData.block;
-    this.moneyInfo.need = upData.money;
+    if (upData) {
+      this.upInfo.rate = upData.rate;
+      this.blockInfo.need = upData.block;
+      this.moneyInfo.need = upData.money;
+    }
   }
 
   private _getRandom(min: number, max: number): number {

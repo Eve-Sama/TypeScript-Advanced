@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from './demo7.interface';
+import { BackendService } from './demo7.backend';
 
 @Component({
   selector: 'app-demo7',
   templateUrl: './demo7.component.html',
   styleUrls: ['./demo7.component.scss'],
+  providers: [BackendService],
 })
 export class Demo7Component implements OnInit {
+  isSpinning = false;
   /** 当前强化等级 */
   level = 0;
   upInfo = {
@@ -47,12 +50,8 @@ export class Demo7Component implements OnInit {
 
   getBlock(): void {
     if (this.payInfo.count === 0) {
-      const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
-      if (value) {
-        this.payInfo.count += 10;
-        this.payInfo.consumeLiuBi++;
-      }
-      return
+      alert('剩余次数不足, 请充值!');
+      return;
     }
     this.payInfo.count--;
     this.blockInfo.addNum = this._getRandom(70, 160);
@@ -67,12 +66,8 @@ export class Demo7Component implements OnInit {
 
   getMoney(): void {
     if (this.payInfo.count === 0) {
-      const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
-      if (value) {
-        this.payInfo.count += 10;
-        this.payInfo.consumeLiuBi++;
-      }
-      return
+      alert('剩余次数不足, 请充值!');
+      return;
     }
     this.payInfo.count--;
     this.moneyInfo.addNum = this._getRandom(1000000, 5000000);
@@ -85,6 +80,14 @@ export class Demo7Component implements OnInit {
     }, 2000);
   }
 
+  pay(): void {
+    const value = confirm('是否需要消耗 1 流币获取 10 次机会?');
+    if (value) {
+      this.payInfo.count += 10;
+      this.payInfo.consumeLiuBi++;
+    }
+  }
+
   up(): void {
     if (this.blockInfo.need > this.blockInfo.current) {
       alert('无色小晶块数量不足!');
@@ -94,35 +97,42 @@ export class Demo7Component implements OnInit {
       alert('金币数量不足!');
       return;
     }
-    this.upInfo.times++;
-    this.blockInfo.current -= this.blockInfo.need;
-    this.moneyInfo.current -= this.moneyInfo.need;
-    if (this._getResultByRate(this.upInfo.rate)) {
-      this.upInfo.state = '强化成功';
-      this.level++;
-      if (this.level < 15) {
-        this._upSuccess();
+    this.isSpinning = true;
+    this.backendService.levelUp(this.level).subscribe(
+      v => {
+        if (v) {
+          this.upInfo.state = '强化成功';
+          this.level++;
+          this._upSuccess();
+        } else {
+          this.upInfo.state = '强化失败';
+        }
+        this.upInfo.times++;
+        this.blockInfo.current -= this.blockInfo.need;
+        this.moneyInfo.current -= this.moneyInfo.need;
+        this.isSpinning = false;
+      },
+      error => {
+        this.isSpinning = false;
+        alert(error);
       }
-    } else {
-      this.upInfo.state = '强化失败';
-    }
+    );
   }
 
   private _upSuccess(): void {
     const upData = map.get(this.level);
-    this.upInfo.rate = upData.rate;
-    this.blockInfo.need = upData.block;
-    this.moneyInfo.need = upData.money;
-  }
-
-  /** 根据概率, 计算当前成功的可能值 */
-  private _getResultByRate(rate: number): boolean {
-    return Math.random() <= rate;
+    if (upData) {
+      this.upInfo.rate = upData.rate;
+      this.blockInfo.need = upData.block;
+      this.moneyInfo.need = upData.money;
+    }
   }
 
   private _getRandom(min: number, max: number): number {
     return Math.floor(Math.random() * max) + min;
   }
+
+  constructor(private backendService: BackendService) {}
 
   ngOnInit(): void {
     this._upSuccess();
