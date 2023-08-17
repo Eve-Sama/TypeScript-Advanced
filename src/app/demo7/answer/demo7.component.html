@@ -3,29 +3,27 @@
     <section class="basic-info-container">
       <h3>背包</h3>
       <ul class="material-list">
-        <li *ngIf="(blockInfo$ | async).startAddAnimation">
-          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />{{
-            (blockInfo$ | async).before | currency : ' ' : 'symbol' : '1.0'
-          }}
-          + {{ (blockInfo$ | async).addNum | currency : ' ' : 'symbol' : '1.0' }} 个
+        <li>
+          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />
+          <span *ngIf="!(blockInfo$ | async).startAddAnimation">
+            {{ (blockInfo$ | async).current | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+          <span *ngIf="(blockInfo$ | async).startAddAnimation">
+            {{ (beforeBlock$ | async) | currency : ' ' : 'symbol' : '1.0' }} +
+            {{ (blockInfo$ | async).addNum | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+          <span>个</span>
         </li>
-        <li *ngIf="!(blockInfo$ | async).startAddAnimation">
-          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />{{
-            (blockInfo$ | async).current | currency : ' ' : 'symbol' : '1.0'
-          }}
-          个
-        </li>
-        <li *ngIf="(moneyInfo$ | async).startAddAnimation">
-          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />{{
-            (moneyInfo$ | async).before | currency : ' ' : 'symbol' : '1.0'
-          }}
-          +
-          {{ (moneyInfo$ | async).addNum | currency : ' ' : 'symbol' : '1.0' }}
-        </li>
-        <li *ngIf="!(moneyInfo$ | async).startAddAnimation">
-          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />{{
-            (moneyInfo$ | async).current | currency : ' ' : 'symbol' : '1.0'
-          }}
+        <li>
+          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />
+          <span *ngIf="(moneyInfo$ | async).startAddAnimation">
+            {{ (beforeMoney$ | async) | currency : ' ' : 'symbol' : '1.0' }}
+            +
+            {{ (moneyInfo$ | async).addNum | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+          <span *ngIf="!(moneyInfo$ | async).startAddAnimation">
+            {{ (moneyInfo$ | async).current | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
         </li>
         <li>消耗的流币: {{ (payInfo$ | async).consumeLiuBi }}</li>
         <li class="op-list">
@@ -39,11 +37,11 @@
       <ul class="material-list">
         <li>
           <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />
-          {{ (blockInfo$ | async).need | currency : ' ' : 'symbol' : '1.0' }} 个
+          {{ needBlock$ | async | currency : ' ' : 'symbol' : '1.0' }} 个
         </li>
         <li>
           <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />
-          {{ (moneyInfo$ | async).need | currency : ' ' : 'symbol' : '1.0' }}
+          {{ needMoney$ | async | currency : ' ' : 'symbol' : '1.0' }}
         </li>
       </ul>
 
@@ -53,7 +51,7 @@
         <span>魔剑 - 阿菲波斯</span>
       </h5>
       <ul class="material-list">
-        <li>成功率: {{ (upInfo$ | async).rate * 100 | number : '2.0-1' }}%</li>
+        <li>成功率: {{ (rate$ | async) * 100 | number : '2.0-1' }}%</li>
         <li
           [ngClass]="{
             'up-success': (upInfo$ | async).state === '强化成功',
@@ -65,18 +63,18 @@
         </li>
         <li>强化次数: {{ (upInfo$ | async).times }}</li>
         <li>
-          <button type="button" [disabled]="(level$ | async) >= 15" (click)="up()">强化装备</button>
+          <button type="button" (click)="up()">强化装备</button>
         </li>
       </ul>
     </section>
 
-    <!-- <section class="wepon-img-container">
-      <img *ngIf="level < 13" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162200039.png" />
+    <section class="wepon-img-container">
+      <img *ngIf="(level$ | async) < 13" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162200039.png" />
       <img
-        *ngIf="level >= 13 && level < 15"
+        *ngIf="(level$ | async) >= 13 && (level$ | async) < 15"
         src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237104.png"
       />
-      <img *ngIf="level >= 15" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237789.png" />
-    </section> -->
+      <img *ngIf="(level$ | async) >= 15" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237789.png" />
+    </section>
   </div>
 </nz-spin>

@@ -21,4 +21,5 @@ export const map = new Map<
   [12, { block: 160, money: 2836800, rate: 0.17 }],
   [13, { block: 180, money: 4255200, rate: 0.16 }],
   [14, { block: 200, money: 6028200, rate: 0.14 }],
+  [15, { block: 0, money: 0, rate: 0 }],
 ]);

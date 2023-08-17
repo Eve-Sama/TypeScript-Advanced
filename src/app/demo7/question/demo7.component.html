@@ -65,18 +65,18 @@
         </li>
         <li>强化次数: {{ upInfo.times }}</li>
         <li>
-          <button type="button" [disabled]="level >= 15" (click)="up()">强化装备</button>
+          <button type="button" (click)="up()">强化装备</button>
         </li>
       </ul>
     </section>
 
-    <!-- <section class="wepon-img-container">
+    <section class="wepon-img-container">
       <img *ngIf="level < 13" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162200039.png" />
       <img
         *ngIf="level >= 13 && level < 15"
         src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237104.png"
       />
       <img *ngIf="level >= 15" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237789.png" />
-    </section> -->
+    </section>
   </div>
 </nz-spin>
