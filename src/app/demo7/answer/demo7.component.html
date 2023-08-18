@@ -1,0 +1,80 @@
+<nz-spin [nzSpinning]="isSpinning$ | async">
+  <div class="container">
+    <section class="basic-info-container">
+      <h3>背包</h3>
+      <ul class="material-list">
+        <li>
+          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />
+          <span *ngIf="!(blockInfo$ | async).startAddAnimation">
+            {{ (blockInfo$ | async).current | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+          <span *ngIf="(blockInfo$ | async).startAddAnimation">
+            {{ (beforeBlock$ | async) | currency : ' ' : 'symbol' : '1.0' }} +
+            {{ (blockInfo$ | async).addNum | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+          <span>个</span>
+        </li>
+        <li>
+          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />
+          <span *ngIf="(moneyInfo$ | async).startAddAnimation">
+            {{ (beforeMoney$ | async) | currency : ' ' : 'symbol' : '1.0' }}
+            +
+            {{ (moneyInfo$ | async).addNum | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+          <span *ngIf="!(moneyInfo$ | async).startAddAnimation">
+            {{ (moneyInfo$ | async).current | currency : ' ' : 'symbol' : '1.0' }}
+          </span>
+        </li>
+        <li>消耗的流币: {{ (payInfo$ | async).consumeLiuBi }}</li>
+        <li class="op-list">
+          <button type="button" (click)="getBlock()">获取无色小晶块({{ (payInfo$ | async).count }})</button>
+          <button type="button" (click)="getMoney()">获取金币({{ (payInfo$ | async).count }})</button>
+          <button type="button" (click)="pay()">充钱!</button>
+        </li>
+      </ul>
+
+      <h3>所需材料信息</h3>
+      <ul class="material-list">
+        <li>
+          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056585.jpg" />
+          {{ needBlock$ | async | currency : ' ' : 'symbol' : '1.0' }} 个
+        </li>
+        <li>
+          <img src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308161056098.png" />
+          {{ needMoney$ | async | currency : ' ' : 'symbol' : '1.0' }}
+        </li>
+      </ul>
+
+      <h3>强化信息</h3>
+      <h5 class="equip-info">
+        <span *ngIf="(level$ | async) > 0" class="level">+ {{ level$ | async }}</span>
+        <span>魔剑 - 阿菲波斯</span>
+      </h5>
+      <ul class="material-list">
+        <li>成功率: {{ (rate$ | async) * 100 | number : '2.0-1' }}%</li>
+        <li
+          [ngClass]="{
+            'up-success': (upInfo$ | async).state === '强化成功',
+            'up-failed': (upInfo$ | async).state === '强化失败',
+            'up-wait': (upInfo$ | async).state === '等待强化'
+          }"
+        >
+          强化结果: <span class="up-result">{{ (upInfo$ | async).state }}</span>
+        </li>
+        <li>强化次数: {{ (upInfo$ | async).times }}</li>
+        <li>
+          <button type="button" (click)="up()">强化装备</button>
+        </li>
+      </ul>
+    </section>
+
+    <section class="wepon-img-container">
+      <img *ngIf="(level$ | async) < 13" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162200039.png" />
+      <img
+        *ngIf="(level$ | async) >= 13 && (level$ | async) < 15"
+        src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237104.png"
+      />
+      <img *ngIf="(level$ | async) >= 15" src="https://eve-sama.oss-cn-shanghai.aliyuncs.com/blog/202308162237789.png" />
+    </section>
+  </div>
+</nz-spin>

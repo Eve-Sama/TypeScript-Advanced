@@ -7,6 +7,8 @@
     flex-wrap: wrap;
     padding: 0px 8px;
     border: 1px dashed #000;
+    max-height: 100px;
+    overflow: auto;
   }
   .demo-container {
     flex: 1;

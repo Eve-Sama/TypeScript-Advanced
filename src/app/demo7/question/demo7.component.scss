@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+
+  .wepon-img-container {
+    display: flex;
+    align-items: center;
+    &>img{
+      width: 80%;
+      height: 80%;
+    }
+  }
+}
+
+.op-list {
+  display: flex;
+  flex-wrap: wrap;
+  button {
+    margin-right: 8px;
+  }
+}
+
+.equip-info {
+  margin-left: 40px;
+  color: #d002d2;
+  font-size: 16px;
+  .level {
+    margin-right: 10px;
+  }
+}
+
+.material-list {
+  li {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    margin-bottom: 10px;
+    transition: all ease 0.3s;
+
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.up-result {
+  font-weight: bold;
+}
+
+.up-success {
+  color: green;
+}
+.up-failed {
+  color: red;
+}
+.up-wait {
+  color: gray;
+}
